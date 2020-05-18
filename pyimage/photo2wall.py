@@ -1,29 +1,40 @@
-#encoding:utf-8
+# -*- encoding: utf-8 -*-
+'''
+@Author  : zeriong；
+@个人公众号：Z先生点记；
+'''
 from PIL import Image
 import os
+
 id ='zuguo'
-img_path ='D:/deepspace/testThink/pyimage/bg.png'
+
+img_path ='D:/deepspace/testThink/pyimage/zuguo3.png'
 #自己找的的模板图片存储地址，需要是矢量图
 
 #这个是我获取图片存放的文件夹，根据自己情况进行设置；
 folder ="F:/王茜/test"  #{}'.format(id)
 #拼接后图片的存放位置
 save_pic_path ='D:/deepspace/testThink/pyimage/photo/{}.jpg'.format(id)
+
 img =Image.open(img_path)
 w,h =img.size#获取图片大小
 new_img = Image.new('RGB',(w,h),'#FFFFFF')#创建新的图片，大小与原图片一样
-unit_size =120
+unit_size =60
 
 y_index = h//unit_size
 x_index = w//unit_size#双斜杠表示：先做除法，再向下取整；
-pic_list = []#存放图片位置
+
+pic_list = []
+
 for i in os.listdir(folder):
     print(i)
     if i.endswith('.jpg'):
         pic_list.append(i)
+
 total =len(pic_list)
 x = 0
 y = 0
+
 for i in range(x_index*y_index):
     '''
     把folder中存放的图片集贴入到你想要贴的图片上，
@@ -41,4 +52,15 @@ for i in range(x_index*y_index):
         x =0
         y +=1
 print('素材扫描完毕')
-new_img.save(save_pic_path)
+new_img.save(save_pic_path,quality =100)
+# src为刚刚保存的图片
+src = Image.open(save_pic_path)
+print(src)
+#src1为原来要贴的图片
+src1 =Image.open(img_path)
+print(src1)
+#把scr1贴到scr上面；
+src.paste(src1,(0,0),src1)
+
+#图片进行保存；
+src.save('{}.png'.format(id))
