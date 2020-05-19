@@ -3,8 +3,9 @@
 @Author  : zeriong；
 @个人公众号：Z先生点记；
 '''
-from PIL import Image
+from PIL import Image, ExifTags
 import os
+import random
 
 id ='zuguo'
 
@@ -42,6 +43,8 @@ for i in range(x_index*y_index):
     print(f'目前进度为{i}\{x_index*y_index}')
     try:
         #利用 Image.resize()来规定图片大小，其中Image.ANATILAS表示的是高质量图片；
+        if(i%total == 0):
+            random.shuffle(pic_list)
         img = Image.open('{}/{}'.format(folder,pic_list[i%total]))
         try:
             for orientation in ExifTags.TAGS.keys() : 
